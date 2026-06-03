@@ -1,6 +1,7 @@
 from openrouter import OpenRouter
 import os
 from tools.registry import TOOLS
+from help import help
 
 def ai_response(client, messages):  
     response = client.chat.send(
@@ -21,7 +22,7 @@ def main():
         ai_name = input("My New Name: ")
         print(f"{ai_name}: Awesome choice! I love my new name.")
     print() 
-    print(f"{ai_name}: What would you like to ask me? I can give you temperature with /weather <city>, open calculator with /calc, and quick math with /math <num1> <+,-,*,/,%> <num2>. Type Quit to exit")
+    print(f"{ai_name}: What would you like to ask me? Type /help for list of tools and Quit to exit")
     print()
     messages = [
         {
@@ -34,6 +35,9 @@ def main():
         prompt = get_prompt(user_name)
         if prompt.lower() == "quit":
             break
+        if prompt == "/help":
+            help(ai_name)
+            continue
         parts = prompt.split(maxsplit=1)
         command = parts[0]
         args = parts[1] if len(parts) > 1 else ""
