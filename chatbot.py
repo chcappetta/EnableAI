@@ -1,0 +1,58 @@
+from openrouter import OpenRouter
+import os
+from tools.registry import TOOLS
+
+def ai_response(client, messages):  
+    response = client.chat.send(
+        model="poolside/laguna-m.1:free",
+        messages= messages)
+    output = response.choices[0].message.content
+    return output
+
+def get_prompt(username):
+    userinput= input(f"{username}: ")
+    return userinput
+
+def main():
+    ai_name = "Ruby"
+    user_name = input(f"{ai_name}: Welcome to EnableAI. What is your name? ")
+    q1=input(f"{ai_name}: Hello {user_name}! Would you like to pick out a name for me? [y/n] ")
+    if q1 == "y":
+        ai_name = input("My New Name: ")
+        print(f"{ai_name}: Awesome choice! I love my new name.")
+    print() 
+    print(f"{ai_name}: What would you like to ask me? I can give you temperature with /weather <city>, open calculator with /calc, and quick math with /math <num1> <+,-,*,/,%> <num2>. Type Quit to exit")
+    print()
+    messages = [
+        {
+            "role": "system",
+            "content": f"You are a helpful AI assistant named {ai_name}."
+        }
+    ]
+    client = OpenRouter(KEY)
+    while True:
+        prompt = get_prompt(user_name)
+        if prompt.lower() == "quit":
+            break
+        parts = prompt.split(maxsplit=1)
+        command = parts[0]
+        args = parts[1] if len(parts) > 1 else ""
+        if command in TOOLS:
+            TOOLS[command](ai_name, args)
+            continue
+        messages.append({
+            "role": "user",
+            "content": prompt
+        })
+        print(f"{ai_name}: Thinking...")
+        try:
+            output = ai_response(client, messages)
+        except Exception as e:
+            output = f"Sorry, AI is unavailable: {e}. Other tools still available."
+        print(f"{ai_name}:", output)
+        messages.append({
+            "role": "assistant",
+            "content": output
+        })
+
+main()
