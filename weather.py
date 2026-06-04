@@ -57,11 +57,7 @@ def weather_tool(city):
     if weather is None:
         return "Weather service unavailable."
     
-    return f"The temperature in {city} is {weather}°F."
+    return weather
 
 def weather_script(ai_name, city):
-    print()
-    print(f"{ai_name}: Thinking...")
-    print()
-    print(f"{ai_name}:", weather_tool(city))
-    print()
+    return(f"{ai_name}: The temperature in {city} is {weather_tool(city)}°F.")
