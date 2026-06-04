@@ -20,10 +20,7 @@ def full_calc(ai_name, blank):
         print()
         func = input(f"Choose a function: +,-,*,/,% : ")
         if func.lower() == "exit":
-            print()
-            print("Exiting Calculator...")
-            print()
-            break
+            return("Exiting Calculator...")
         if func == "+":
             num1 = input("What is your first number? ")
             num2 = input("And the second? ")
@@ -74,6 +71,4 @@ def quick_calc(ai_name, args):
         x= int(parts[0])
         op= parts[1]
         y= int(parts[2])
-        print()
-        print(f"{ai_name}: {x}{op}{y} = {quick_math(x,op,y)}")
-        print()
+        return(f"{ai_name}: {x}{op}{y} = {quick_math(x,op,y)}")
