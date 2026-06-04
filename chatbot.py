@@ -2,6 +2,8 @@ from openrouter import OpenRouter
 import os
 from tools.registry import TOOLS
 from help import help
+import json
+from memory import load_history, save_history
 
 def ai_response(client, messages):  
     response = client.chat.send(
@@ -21,28 +23,40 @@ def main():
     if q1 == "y":
         ai_name = input("My New Name: ")
         print(f"{ai_name}: Awesome choice! I love my new name.")
-    print() 
-    print(f"{ai_name}: What would you like to ask me? Type /help for list of tools and Quit to exit")
-    print()
-    messages = [
-        {
+    q3=input(f"{ai_name}: Would you like to continue our conversation where we left off? [y/n] ") 
+    if q3 == "y":
+        messages = load_history(user_name, ai_name)
+    else:
+        messages = [
+            {
             "role": "system",
             "content": f"You are a helpful AI assistant named {ai_name}."
         }
-    ]
+        ]
+    print(f"{ai_name}: What would you like to ask me? Type /help for list of tools and Quit to exit")
+    print()
     client = OpenRouter(KEY)
     while True:
         prompt = get_prompt(user_name)
         if prompt.lower() == "quit":
+            qexit = input(f"{ai_name}: Would you like to save today's conversation? [y/n] ")
+            if qexit == "y":
+                print(f"{ai_name}: Saving...")
+                save_history(user_name, messages)
+                print()
+                print(f"{ai_name}: Saved.")
+            print(f"{ai_name}: Thank you for using EnableAI. Have a nice day, {user_name}!")
             break
         if prompt == "/help":
             help(ai_name)
+            continue
+        if not prompt.strip():
             continue
         parts = prompt.split(maxsplit=1)
         command = parts[0]
         args = parts[1] if len(parts) > 1 else ""
         if command in TOOLS:
-            TOOLS[command](ai_name, args)
+            print(TOOLS[command](ai_name, args))
             continue
         messages.append({
             "role": "user",
