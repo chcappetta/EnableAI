@@ -4,6 +4,7 @@ from tools.registry import TOOLS
 from help import help
 import json
 from memory import load_history, save_history
+from auth import login, register, load_users, save_users
 
 def ai_response(client, messages):  
     response = client.chat.send(
@@ -18,7 +19,7 @@ def get_prompt(username):
 
 def main():
     ai_name = "Ruby"
-    user_name = input(f"{ai_name}: Welcome to EnableAI. What is your name? ")
+    user_name = logreg()
     q1=input(f"{ai_name}: Hello {user_name}! Would you like to pick out a name for me? [y/n] ")
     if q1 == "y":
         ai_name = input("My New Name: ")
@@ -72,5 +73,28 @@ def main():
             "role": "assistant",
             "content": output
         })
+
+def logreg():
+    ai_name = "Ruby"
+    print("Welcome to EnableAI")
+    print("Please select: ")
+    print("1. Login")
+    print("2. Register")
+    choice = input("> ")
+    if choice == "1":
+        user_name = login()
+    elif choice == "2":
+        user_name = register()
+    else: 
+        print("Invalid Input.")
+        return
+    if user_name is None:
+        print("Login Failed.")
+        return
+    messages = load_history(user_name, ai_name)
+    return user_name
+
+    
+
 
 main()
