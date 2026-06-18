@@ -4,7 +4,7 @@ HEADERS = {
     "User-Agent": "EnableAI"
 }
 
-def github_tool(ai_name, username):
+def github_tool(ai_name, args, username):
     url = f"https://api.github.com/users/{username}"
     response = requests.get(url, headers=HEADERS)
     
@@ -17,5 +17,3 @@ def github_tool(ai_name, username):
         f"Name: {data.get('name', 'N/A')}\n"
         f"Public Repos: {data['public_repos']}\n"
     )
-
-
