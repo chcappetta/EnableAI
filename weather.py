@@ -59,5 +59,5 @@ def weather_tool(city):
     
     return weather
 
-def weather_script(ai_name, city):
+def weather_script(ai_name, user_name, city):
     return(f"{ai_name}: The temperature in {city} is {weather_tool(city)}°F.")
