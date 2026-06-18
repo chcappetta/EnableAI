@@ -4,7 +4,7 @@ HEADERS = {
     "User-Agent": "EnableAI"
 }
 
-def github_tool(ai_name, args, username):
+def github_tool(ai_name, user_name, username):
     url = f"https://api.github.com/users/{username}"
     response = requests.get(url, headers=HEADERS)
     
