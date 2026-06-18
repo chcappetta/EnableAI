@@ -13,8 +13,8 @@ def addition(x,y):
 def subtraction(x,y):
     return x-y
 
-def full_calc(ai_name, user_name, blank):
-    blank=""
+def full_calc(ai_name, user_name, args):
+    args=""
     print(f"Welcome to Simple Calculator. Enter Exit to return to {ai_name}.")
     while True:
         print()
