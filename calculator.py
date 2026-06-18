@@ -13,7 +13,7 @@ def addition(x,y):
 def subtraction(x,y):
     return x-y
 
-def full_calc(ai_name, blank):
+def full_calc(ai_name, user_name, blank):
     blank=""
     print(f"Welcome to Simple Calculator. Enter Exit to return to {ai_name}.")
     while True:
@@ -66,7 +66,7 @@ def quick_math(x,op,y):
         return modulo(x, y)
     return None
 
-def quick_calc(ai_name, args):
+def quick_calc(ai_name, user_name, args):
         parts = args.split()
         x= int(parts[0])
         op= parts[1]
