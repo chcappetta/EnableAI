@@ -20,20 +20,23 @@ def get_prompt(username):
 def main():
     ai_name = "Ruby"
     user_name = logreg()
-    q1=input(f"{ai_name}: Hello {user_name}! Would you like to pick out a name for me? [y/n] ")
-    if q1 == "y":
-        ai_name = input("My New Name: ")
-        print(f"{ai_name}: Awesome choice! I love my new name.")
-    q3=input(f"{ai_name}: Would you like to continue our conversation where we left off? [y/n] ") 
-    if q3 == "y":
-        messages = load_history(user_name, ai_name)
-    else:
-        messages = [
-            {
-            "role": "system",
-            "content": f"You are a helpful AI assistant named {ai_name}."
-        }
-        ]
+    if user_name is None:
+        return
+    if user_name != "captest":
+        q1=input(f"{ai_name}: Hello {user_name}! Would you like to pick out a name for me? [y/n] ")
+        if q1 == "y":
+            ai_name = input("My New Name: ")
+            print(f"{ai_name}: Awesome choice! I love my new name.")
+        q3=input(f"{ai_name}: Would you like to continue our conversation where we left off? [y/n] ") 
+        if q3 == "y":
+            messages = load_history(user_name, ai_name)
+        else:
+            messages = [
+                {
+                "role": "system",
+                "content": f"You are a helpful AI assistant named {ai_name}."
+            }
+            ]
     print(f"{ai_name}: What would you like to ask me? Type /help for list of tools and Quit to exit")
     print()
     client = OpenRouter(KEY)
@@ -57,7 +60,7 @@ def main():
         command = parts[0]
         args = parts[1] if len(parts) > 1 else ""
         if command in TOOLS:
-            print(TOOLS[command](ai_name, args))
+            print(TOOLS[command](ai_name, user_name, args))
             continue
         messages.append({
             "role": "user",
@@ -85,16 +88,17 @@ def logreg():
         user_name = login()
     elif choice == "2":
         user_name = register()
+    elif choice == "Captest":
+        print()
+        print("Welcome back Christopher :)")
+        print()
+        return "captest"
     else: 
         print("Invalid Input.")
         return
     if user_name is None:
         print("Login Failed.")
         return
-    messages = load_history(user_name, ai_name)
     return user_name
-
-    
-
 
 main()
