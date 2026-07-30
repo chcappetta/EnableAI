@@ -49,13 +49,6 @@ A small terminal chatbot that uses OpenRouter to generate AI responses. The app 
 - Python 3.10+ (or latest stable supported interpreter)
 - An OpenRouter API key (sign up at OpenRouter if you don't have one)
 
-## Suggested requirements.txt
-```
-openrouter
-passlib
-```
-(Adjust versions as needed; add libraries required by any tools you implement.)
-
 ## Configuration & environment
 The app expects an OpenRouter API key. Recommended approaches:
 - Preferred: set `OPENROUTER_API_KEY` in your shell environment as shown above.
@@ -79,33 +72,7 @@ Example `.gitignore` entries:
 /.env
 ```
 
-## Making the app runnable (recommended next steps)
-- Add `requirements.txt`.
-- Add this `README.md` (committed).
-- Update `chatbot.py` to read `OPENROUTER_API_KEY` from environment (see above).
-- Create a minimal `tools/registry.py` placeholder to avoid import errors:
-  ```python
-  # tools/registry.py
-  def noop_tool(ai, user, args):
-      return f"{ai}: Tool not implemented."
-
-  TOOLS = {
-      "/echo": lambda ai, user, args: args or "(no args)"
-  }
-  ```
-- Add `LICENSE` and basic contributing notes if this will be shared.
-
 ## Troubleshooting
 - "KEY not defined" at startup: set `OPENROUTER_API_KEY` and ensure `chatbot.py` reads it.
 - ImportError for `tools.registry`: add `tools/registry.py` or remove/change the import.
 - Permission/IO errors saving files: ensure `data/` directory exists and is writable.
-
-## Contributing
-Contributions welcome. Suggested small first PRs:
-- Add `requirements.txt`
-- Add this `README.md`
-- Add `tools/registry.py` placeholder and a simple smoke test
-- Add `.gitignore`
-
-## License
-Add a LICENSE file (e.g., MIT) if you want to make this project public.
