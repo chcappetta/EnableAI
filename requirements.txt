@@ -1,0 +1,4 @@
+textual
+openrouter
+requests
+passlib
